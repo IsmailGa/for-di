@@ -1,0 +1,6 @@
+{
+  "name": "Love Portfolio",
+  "description": "An elegant, interactive, and aesthetic love portfolio website with photos, flip cards, and interactive games curated for a special someone.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

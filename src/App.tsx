@@ -1,0 +1,226 @@
+import React, { useRef, useState, useEffect } from "react";
+import Hero from "./components/Hero";
+import Gallery from "./components/Gallery";
+import Reasons from "./components/Reasons";
+import InteractiveZone from "./components/InteractiveZone";
+import Footer from "./components/Footer";
+import { motion, AnimatePresence } from "motion/react";
+import {
+  Heart,
+  Music,
+  Volume2,
+  VolumeX,
+  Sparkles,
+  Navigation,
+} from "lucide-react";
+
+export default function App() {
+  const galleryRef = useRef<HTMLDivElement>(null);
+  const reasonsRef = useRef<HTMLDivElement>(null);
+  const gamesRef = useRef<HTMLDivElement>(null);
+
+  const [scrolled, setScrolled] = useState(false);
+  const [isPlayingMusic, setIsPlayingMusic] = useState(false);
+  const [audioCtx, setAudioCtx] = useState<AudioContext | null>(null);
+  const [intervalId, setIntervalId] = useState<any>(null);
+
+  // Dynamic scroll listener for header appearance
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Web Audio ambient chime generator (safe, clean, self-contained, no external mp3s needed)
+  const startChimeSynth = () => {
+    // Check auto-play policy
+    const ctx = new (
+      window.AudioContext || (window as any).webkitAudioContext
+    )();
+    setAudioCtx(ctx);
+
+    // Cute gentle lullaby chord progressions: A Major, F# minor, D Major, E Major
+    const progressions = [
+      [220, 330, 440, 554, 659], // A, E, A, C#, E
+      [185, 277, 370, 440, 554], // F#m
+      [146, 220, 293, 370, 440], // D
+      [164, 246, 329, 392, 493], // E
+    ];
+
+    let currentChordIndex = 0;
+
+    const playRandomChime = () => {
+      if (ctx.state === "suspended") {
+        ctx.resume();
+      }
+
+      const chord = progressions[currentChordIndex];
+      // Pick random 2 notes from the chord to chime
+      const note1 = chord[Math.floor(Math.random() * chord.length)];
+      const note2 = chord[Math.floor(Math.random() * chord.length)];
+
+      const now = ctx.currentTime;
+
+      // Synth Chime Node 1
+      const osc1 = ctx.createOscillator();
+      const gain1 = ctx.createGain();
+      osc1.type = "triangle";
+      osc1.frequency.setValueAtTime(note1 * (Math.random() > 0.8 ? 2 : 1), now); // occasionally 1 octave up for magic sparkles
+      gain1.gain.setValueAtTime(0, now);
+      gain1.gain.linearRampToValueAtTime(0.04, now + 0.1);
+      gain1.gain.exponentialRampToValueAtTime(0.0001, now + 2.5);
+      osc1.connect(gain1);
+      gain1.connect(ctx.destination);
+      osc1.start(now);
+      osc1.stop(now + 2.6);
+
+      // Synth Chime Node 2 after a slight humanized delay
+      setTimeout(() => {
+        if (!ctx) return;
+        const osc2 = ctx.createOscillator();
+        const gain2 = ctx.createGain();
+        osc2.type = "sine";
+        osc2.frequency.setValueAtTime(note2, ctx.currentTime);
+        gain2.gain.setValueAtTime(0, ctx.currentTime);
+        gain2.gain.linearRampToValueAtTime(0.03, ctx.currentTime + 0.15);
+        gain2.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 3);
+        osc2.connect(gain2);
+        gain2.connect(ctx.destination);
+        osc2.start(ctx.currentTime);
+        osc2.stop(ctx.currentTime + 3.1);
+      }, 350);
+
+      // Progress chord progression slowly
+      if (Math.random() > 0.6) {
+        currentChordIndex = (currentChordIndex + 1) % progressions.length;
+      }
+    };
+
+    // Play right away
+    playRandomChime();
+
+    // Loop
+    const interval = setInterval(playRandomChime, 2400);
+    setIntervalId(interval);
+  };
+
+  const toggleMusic = () => {
+    if (isPlayingMusic) {
+      if (intervalId) {
+        clearInterval(intervalId);
+        setIntervalId(null);
+      }
+      if (audioCtx) {
+        audioCtx.close();
+        setAudioCtx(null);
+      }
+      setIsPlayingMusic(false);
+    } else {
+      setIsPlayingMusic(true);
+      try {
+        startChimeSynth();
+      } catch (e) {
+        console.error("Audio synthesizer failure:", e);
+      }
+    }
+  };
+
+  // Safe manual scrolling function
+  const scrollTo = (ref: React.RefObject<HTMLDivElement | null>) => {
+    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  return (
+    <div className="min-h-screen relative font-sans flex flex-col bg-radial-gradient from-[#fffbfd] via-[#fbf7fc] to-[#f9f3f9]">
+      <motion.header
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className={`fixed top-4 inset-x-4 z-40 mx-auto max-w-4xl rounded-2xl transition-all duration-300 ${
+          scrolled ? "glass py-3 px-6 shadow-md" : "bg-transparent py-4 px-4"
+        }`}
+      >
+        <div className="flex items-center justify-between">
+          <div
+            className="flex items-center gap-1.5 cursor-pointer"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
+            <Heart
+              size={16}
+              fill="#ef4444"
+              className="text-pink-500 animate-pulse"
+            />
+            <span className="font-serif font-bold text-sm tracking-wide text-purple-950">
+              Only You ✨
+            </span>
+          </div>
+
+          <nav className="hidden sm:flex items-center gap-6 text-xs font-semibold text-purple-900/70">
+            <button
+              onClick={() => scrollTo(galleryRef)}
+              className="hover:text-purple-950 transition-colors cursor-pointer"
+            >
+              Воспоминания
+            </button>
+            <button
+              onClick={() => scrollTo(reasonsRef)}
+              className="hover:text-purple-950 transition-colors cursor-pointer"
+            >
+              Причины
+            </button>
+            <button
+              onClick={() => scrollTo(gamesRef)}
+              className="hover:text-purple-950 transition-colors cursor-pointer"
+            >
+              Интерактив
+            </button>
+          </nav>
+
+          {/* Clean audio trigger button */}
+          <button
+            onClick={toggleMusic}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
+              isPlayingMusic
+                ? "bg-pink-100/50 border-pink-200 text-pink-700 animate-pulse"
+                : "bg-white/60 border-purple-100 text-purple-900/70 hover:bg-white"
+            }`}
+            title="Переключить нежную фоновую музыку"
+          >
+            {isPlayingMusic ? <Volume2 size={12} /> : <VolumeX size={12} />}
+            <span>Музыка: {isPlayingMusic ? "Вкл" : "Выкл"}</span>
+          </button>
+        </div>
+      </motion.header>
+
+      {/* RENDER PAGES AND MODULES */}
+      <main className="flex-1">
+        {/* HERO */}
+        <Hero onScrollToGallery={() => scrollTo(galleryRef)} />
+
+        {/* MEMORY PHOTO PACT COCHLEAR */}
+        <div ref={galleryRef}>
+          <Gallery />
+        </div>
+
+        {/* 10 REASONS ACCORDION COLUMN GRID */}
+        <div ref={reasonsRef}>
+          <Reasons />
+        </div>
+
+        {/* MINI GAMES ZONE AREA */}
+        <div ref={gamesRef}>
+          <InteractiveZone />
+        </div>
+      </main>
+
+      {/* FOOTER */}
+      <Footer />
+    </div>
+  );
+}
