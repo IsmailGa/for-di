@@ -60,8 +60,6 @@ export default function Hero({ onScrollToGallery }: HeroProps) {
       </div>
 
       <div className="relative z-10 text-center max-w-4xl mx-auto flex flex-col items-center justify-center">
-        {/* Top small badge */}
-        
 
         {isEditingName ? (
           <motion.form
@@ -140,12 +138,12 @@ export default function Hero({ onScrollToGallery }: HeroProps) {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={onScrollToGallery}
-          className="group relative cursor-pointer px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-medium rounded-full shadow-lg hover:shadow-xl hover:shadow-pink-400/20 active:shadow-md transition-all duration-300"
+          className="group relative cursor-pointer px-5 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-medium rounded-full shadow-lg hover:shadow-xl hover:shadow-pink-400/20 active:shadow-md transition-all duration-300"
           id="btn-scroll-gallery"
         >
           {/* Inner ambient ring */}
           <div className="absolute inset-0 bg-white/20 rounded-full scale-0 group-hover:scale-100 transition-transform duration-300" />
-          <span className="flex items-center gap-2 relative z-10 text-sm tracking-wide">
+          <span className="flex items-center gap-2 relative z-10 text-xs sm:text-sm tracking-wide">
             Отправить в путешествие воспоминаний
             <Heart size={16} fill="white" className="group-hover:animate-ping" />
           </span>

@@ -7,16 +7,17 @@
 }
 
 /* Custom background animations and extra utilities for smooth interactivity */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: #fcf9fc;
   color: #3b2c3e;
-  overflow-x: hidden;
   font-family: var(--font-sans);
-}
-
-/* Custom smooth scrolling */
-html {
-  scroll-behavior: smooth;
 }
 
 /* Glassmorphism utility shortcuts */

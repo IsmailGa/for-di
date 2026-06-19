@@ -105,7 +105,7 @@ export default function Reasons() {
                   {/* FRONT SIDE (Card representation closed) */}
                   <div
                     className="absolute inset-0 w-full h-full rounded-2xl glass hover:border-pink-300 transition-colors p-6 flex flex-col items-center justify-between shadow-xs border border-white"
-                    style={{ backfaceVisibility: 'hidden' }}
+                    style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
                   >
                     <div className="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center font-bold text-xs text-purple-800 border border-purple-100">
                       #{reason.id}
@@ -136,6 +136,7 @@ export default function Reasons() {
                     style={{
                       transform: 'rotateY(180deg)',
                       backfaceVisibility: 'hidden',
+                      WebkitBackfaceVisibility: 'hidden',
                       background: 'linear-gradient(135deg, #fff7fa 0%, #faf5ff 100%)',
                     }}
                   >

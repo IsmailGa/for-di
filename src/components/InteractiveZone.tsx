@@ -54,9 +54,11 @@ export default function InteractiveZone() {
   ];
 
   const handleHeartClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left + (Math.random() * 40 - 20);
-    const y = e.clientY - rect.top - 20;
+    const parent = e.currentTarget.parentElement;
+    if (!parent) return;
+    const parentRect = parent.getBoundingClientRect();
+    const x = e.clientX - parentRect.left + (Math.random() * 40 - 20);
+    const y = e.clientY - parentRect.top - 20;
 
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
     const randomScale = 0.5 + Math.random() * 0.8;
