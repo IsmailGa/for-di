@@ -143,7 +143,7 @@ export default function App() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
         className={`fixed top-4 inset-x-4 z-40 mx-auto max-w-4xl rounded-2xl transition-all duration-300 ${
-          scrolled ? "glass py-3 px-6 shadow-md" : "bg-transparent py-4 px-4"
+          scrolled ? "backdrop-blur-lg py-3 px-6 shadow-md" : "bg-transparent py-4 px-4"
         }`}
       >
         <div className="flex items-center justify-between">
