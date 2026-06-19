@@ -40,7 +40,7 @@ export default function Gallery() {
   return (
     <section
       id="gallery"
-      className="py-24 px-4 relative bg-radial-gradient from-purple-50/50 via-white to-pink-50/40"
+      className="py-24 px-4 relative bg-[radial-gradient(circle_at_top,_rgba(243,232,255,0.4)_0%,_rgba(255,255,255,1)_60%,_rgba(253,242,248,0.3)_100%)]"
     >
       {/* Decorative blurred background shapes */}
       <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-purple-100/40 rounded-full blur-3xl pointer-events-none" />
@@ -91,7 +91,7 @@ export default function Gallery() {
             </div>
           ) : (
             /* Изменено на columns для эффекта Masonry (как в Pinterest) */
-            <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 [column-fill:_balance]">
+            <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 [column-fill:_balance]">
               {photos.map((photo, i) => (
                 <motion.div
                   key={photo.id}
@@ -99,7 +99,7 @@ export default function Gallery() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.05 }}
-                  className="break-inside-avoid relative rounded-2xl overflow-hidden bg-white hover:border-pink-300 border border-purple-100/60 transition-all duration-300 shadow-sm hover:shadow-xl cursor-pointer p-3 pb-4 flex flex-col"
+                  className="break-inside-avoid relative rounded-2xl overflow-hidden bg-white hover:border-pink-300 border border-purple-100/60 transition-all duration-300 shadow-sm hover:shadow-xl cursor-pointer p-3 pb-4 flex flex-col mb-6"
                   onClick={() => setSelectedPhoto(photo)}
                 >
                   {/* Контейнер БЕЗ жесткого aspect-ratio, чтобы фотка не резалась */}

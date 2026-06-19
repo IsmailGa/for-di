@@ -93,7 +93,7 @@ export default function InteractiveZone() {
   const levelInfo = getLoveLevel(clickCount);
 
   return (
-    <section id="games" className="py-24 px-4 bg-radial-gradient from-indigo-50/20 via-white to-purple-50/50 relative overflow-hidden">
+    <section id="games" className="py-24 px-4 bg-[radial-gradient(circle_at_bottom,_rgba(224,231,255,0.2)_0%,_rgba(255,255,255,1)_50%,_rgba(243,232,255,0.4)_100%)] relative overflow-hidden">
       {/* Decorative vectors */}
       <div className="absolute top-1/4 left-10 w-64 h-64 bg-indigo-100/30 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 right-10 w-64 h-64 bg-pink-100/30 rounded-full blur-3xl pointer-events-none" />
@@ -291,7 +291,7 @@ export default function InteractiveZone() {
                 onClick={handleHeartClick}
                 whileHover={{ scale: 1.08 }}
                 whileTap={{ scale: 0.9 }}
-                className="relative cursor-pointer p-8 rounded-full border border-pink-100 bg-linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%) shadow-inner focus:outline-hidden group"
+                className="relative cursor-pointer p-8 rounded-full border border-pink-100 bg-[linear-gradient(135deg,_#fff1f2_0%,_#ffe4e6_100%)] shadow-inner focus:outline-hidden group"
               >
                 {/* Visual ripple layers in back */}
                 <motion.div

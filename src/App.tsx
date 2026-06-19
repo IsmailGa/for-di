@@ -137,55 +137,56 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen relative font-sans flex flex-col bg-radial-gradient from-[#fffbfd] via-[#fbf7fc] to-[#f9f3f9]">
+    <div className="min-h-screen relative font-sans flex flex-col bg-[radial-gradient(circle,_#fffbfd_0%,_#fbf7fc_50%,_#f9f3f9_100%)]">
       <motion.header
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className={`fixed top-4 inset-x-4 z-40 mx-auto max-w-4xl rounded-2xl transition-all duration-300 ${
-          scrolled ? "backdrop-blur-lg py-3 px-6 shadow-md" : "bg-transparent py-4 px-4"
+        className={`fixed top-4 inset-x-4 sm:inset-x-6 z-40 mx-auto max-w-4xl rounded-2xl transition-all duration-300 overflow-hidden ${
+          scrolled
+            ? "bg-white/75 backdrop-blur-lg border border-purple-100/70 shadow-md py-2.5 px-4 sm:px-6"
+            : "bg-white/35 backdrop-blur-md border border-white/30 shadow-xs py-3 px-4"
         }`}
       >
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           <div
-            className="flex items-center gap-1.5 cursor-pointer"
+            className="flex items-center gap-1.5 cursor-pointer min-w-0 shrink-0"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
             <Heart
               size={16}
               fill="#ef4444"
-              className="text-pink-500 animate-pulse"
+              className="text-pink-500 animate-pulse shrink-0"
             />
-            <span className="font-serif font-bold text-sm tracking-wide text-purple-950">
+            <span className="font-serif font-bold text-sm tracking-wide text-purple-950 truncate">
               Only You ✨
             </span>
           </div>
 
-          <nav className="hidden sm:flex items-center gap-6 text-xs font-semibold text-purple-900/70">
+          <nav className="hidden md:flex items-center gap-6 text-xs font-semibold text-purple-900/70 min-w-0">
             <button
               onClick={() => scrollTo(galleryRef)}
-              className="hover:text-purple-950 transition-colors cursor-pointer"
+              className="hover:text-purple-950 transition-colors cursor-pointer whitespace-nowrap"
             >
               Воспоминания
             </button>
             <button
               onClick={() => scrollTo(reasonsRef)}
-              className="hover:text-purple-950 transition-colors cursor-pointer"
+              className="hover:text-purple-950 transition-colors cursor-pointer whitespace-nowrap"
             >
               Причины
             </button>
             <button
               onClick={() => scrollTo(gamesRef)}
-              className="hover:text-purple-950 transition-colors cursor-pointer"
+              className="hover:text-purple-950 transition-colors cursor-pointer whitespace-nowrap"
             >
               Интерактив
             </button>
           </nav>
 
-          {/* Clean audio trigger button */}
           <button
             onClick={toggleMusic}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full border text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer shrink-0 ${
               isPlayingMusic
                 ? "bg-pink-100/50 border-pink-200 text-pink-700 animate-pulse"
                 : "bg-white/60 border-purple-100 text-purple-900/70 hover:bg-white"
@@ -193,7 +194,9 @@ export default function App() {
             title="Переключить нежную фоновую музыку"
           >
             {isPlayingMusic ? <Volume2 size={12} /> : <VolumeX size={12} />}
-            <span>Музыка: {isPlayingMusic ? "Вкл" : "Выкл"}</span>
+            <span className="hidden sm:inline whitespace-nowrap">
+              Музыка: {isPlayingMusic ? "Вкл" : "Выкл"}
+            </span>
           </button>
         </div>
       </motion.header>

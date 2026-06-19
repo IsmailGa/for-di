@@ -28,9 +28,9 @@ export default function Hero({ onScrollToGallery }: HeroProps) {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-4 overflow-hidden bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50">
       {/* Absolute decor assets */}
-      <div className="absolute top-12 left-12 w-64 h-64 bg-pink-200/30 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-12 right-12 w-80 h-80 bg-purple-200/30 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 right-1/4 w-48 h-48 bg-indigo-200/20 rounded-full blur-2xl pointer-events-none" />
+      <div className="absolute top-12 left-4 sm:left-12 w-48 sm:w-64 h-48 sm:h-64 bg-pink-200/30 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-12 right-4 sm:right-12 w-64 sm:w-80 h-64 sm:h-80 bg-purple-200/30 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 right-12 sm:right-1/4 w-36 sm:w-48 h-36 sm:h-48 bg-indigo-200/20 rounded-full blur-2xl pointer-events-none" />
 
       {/* Confetti-like floating hearts in background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
